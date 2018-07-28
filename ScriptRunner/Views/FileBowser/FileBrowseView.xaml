@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="ScriptRunner.Views.FileBrowseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ScriptRunner.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="210"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Setting"></TextBlock>
+            <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Settings}" SelectedItem="{Binding SelectedSetting,NotifyOnSourceUpdated=True}"  DisplayMemberPath="SettingName" IsSynchronizedWithCurrentItem="True" VerticalContentAlignment="Center"></ComboBox>
+        </Grid>
+
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Script"></TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" Text="{Binding FilePath}" VerticalContentAlignment="Center"></TextBox>
+            <Button Grid.Row="0" Grid.Column="4" Content="Browse" Command="{Binding BrowseCommand}"></Button>
+            <Button Grid.Row="0" Grid.Column="6" Content="Run" Command="{Binding RunCommand}"></Button>
+            
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Script Execution Result" VerticalAlignment="Center"></TextBlock>
+
+            <TextBlock Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"></TextBlock>
+
+            <ListBox Grid.Column="0" Grid.Row="4" Background="Transparent" Margin="0,0,2,2" ItemsSource="{Binding Logs}" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayMessage}" Foreground="{Binding BackGroundCode}" TextWrapping="WrapWithOverflow"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Padding" Value="2"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="BorderBrush" Value="#DEDEDE"/>
+                    </Style>
+                </ListBox.Resources>
+            </ListBox>
+        </Grid>
+        
+    </Grid>
+</UserControl>

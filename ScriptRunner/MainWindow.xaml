@@ -1,0 +1,90 @@
+﻿<Window x:Class="ScriptRunner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:vm="clr-namespace:ScriptRunner.ViewModels"
+        xmlns:vw="clr-namespace:ScriptRunner.Views"
+        xmlns:local="clr-namespace:ScriptRunner"
+        mc:Ignorable="d"
+        Title="Script Runner" WindowState="Maximized">
+    <tk:BusyIndicator IsBusy="{Binding IsShowBusy,Mode=TwoWay}" BusyContent="{Binding BusyMessage}"  DisplayAfter="0">
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200" Width="20*"/>
+            <ColumnDefinition MinWidth="300" Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="#2F4050">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#233646">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="ScriptR" FontSize="40" FontWeight="ExtraBold" Foreground="#676A6C"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ListBox ItemsSource="{Binding Contents}" SelectedItem="{Binding CurrentContent}" Background="Transparent" BorderThickness="0" Padding="5">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid MinHeight="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding Icon}"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Header}" FontSize="16" FontWeight="Normal" Foreground="#9BA6B6"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Resources>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Margin" Value="3"/>
+                        </Style>
+                    </ListBox.Resources>
+                </ListBox>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#F3F3F4">
+                <Grid MinHeight="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<Image Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding CurrentContent.Icon}"/>-->
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding CurrentContent.Header}" FontSize="16" FontWeight="Normal" Foreground="#676A6C"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Background="#FFFFFF">
+                <ContentControl Content="{Binding CurrentContent}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:FileBrowserViewModel}">
+                            <Grid Background="White">
+                                <vw:FileBrowseView/>
+                            </Grid>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                            <Grid Background="White">
+                                <vw:SettingsView/>
+                            </Grid>
+                        </DataTemplate>
+
+
+                        <DataTemplate DataType="{x:Type vm:SettingsDetailViewModel}">
+                            <Grid Background="White">
+                                <vw:SettingsDetailView/>
+                            </Grid>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+            </Grid>
+        </Grid>
+    </Grid>
+    </tk:BusyIndicator>
+</Window>
